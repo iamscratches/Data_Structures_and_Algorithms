@@ -1,5 +1,3 @@
-Here's the comprehensive markdown file for the "Longest Consecutive Sequence" problem using the HashSet approach:
-
 # 🚀 Longest Consecutive Sequence - HashSet Solution
 
 ## 📜 Problem Statement
