@@ -1,0 +1,106 @@
+/*
+A state has N different cities, denoted by uppercase letters. Alice is in city A and Bob is at city B. They are travelling to meet their friend David in city D. These cities are interconnected by roads which can be assumed to be a connected undirected and unweighted graph.
+
+Alice and Bob each take cabs to reach their destination. However they want to minimize the cab costs. If both of them reach the same city, they can take a common cab together.
+
+Compute the minimum total number of distinct edges Alice and Bob will cross to get to their destination. That is, minimizing the size of the set of edges from a path from A to D unioned with the set of edges from a path from B to D.
+
+A - F
+|      \
+C - E - D
+|       |
+B - G - H
+Here if Alice follows the path A - F - D and Bob follows the path B - G - H - D, then the total number of distinct edges are 5.
+
+However if Alice takes the longer path and meets Bob at C, then Alice follows A - C - E - D and Bob travels B - C - E - D. They travel 4 distinct edges in total.
+
+  A   B   C  D  E   F G H
+
+ [-1,-1, 1,-1, 2, 1,-1,-1]
+ 
+  A       G
+  
+  p1 = min(a,x) + min(G,x) + min(x,D)
+  x-> A->G
+  p1-> minimum
+  p1->D
+
+  min(a,x) + min(G,x) + min(x,D) x=A-G
+  
+  O(n2)
+  space = O(n2)
+  
+*/
+  
+public int shortestDistance(int[][] edge, int start1, int start2, int end){
+  int n = edge.length;
+  int[] shortestDist1 = new int[n];
+  int[] shortestDist2 = new int[n];
+  int[] shortestDist3 = new int[n];
+  Queue<Integer> q = new LinkedList<>();
+  int dist = 0;
+  for(int i=0; i<n; i++){
+        shortestDist1[i] = Integer.MAX_VALUE;
+  }
+  for(int i=0; i<n; i++){
+        shortestDist2[i] = Integer.MAX_VALUE;
+  }
+  
+  q.offer(start1);
+  while(!q.isEmpty(){
+    int size = q.size();
+    for(int i=0; i<size; i++){
+      int startingPoint = q.poll();
+      for(int i=0; i<n; i++){
+        if(arr[startingPoint][i]==1 && shortestDist!=Integer.MAX_VALUE){
+             shortestDist1[i]=1+dist;
+              q.offer(i);
+        }
+      }
+    }
+    dist++;
+  }
+  dist=0;
+        
+  q.offer(start2);
+  while(!q.isEmpty(){
+    int size = q.size();
+    for(int i=0; i<size; i++){
+      int startingPoint = q.poll();
+      for(int i=0; i<n; i++){
+        if(arr[startingPoint][i]==1 && shortestDist!=Integer.MAX_VALUE){
+             shortestDist2[i]=1+dist;
+              q.offer(i);
+        }
+      }
+    }
+    dist++;
+  }
+        
+  dist=0;
+  for(int j=0; i<n; i++){
+        shortestDist3[i] = Integer.MAX_VALUE;
+  }
+  q.offer(end);
+  while(!q.isEmpty(){
+    int size = q.size();
+    for(int i=0; i<size; i++){
+      int startingPoint = q.poll();
+      for(int i=0; i<n; i++){
+        if(arr[startingPoint][i]==1 && shortestDist3!=Integer.MAX_VALUE){
+             shortestDist3[i]=1+dist;
+              q.offer(i);
+        }
+      }
+    }
+    dist++;
+  }
+  
+  int min = Integer.MAX_VALUE;
+  //min(a,x) + min(G,x) + min(x,D) x=A-G
+  for(int i=0; i<n; i++){
+    min = Math.min(min,shortestDist1[i]+shortestDist2[i]+shortestDist3[i]);
+  }
+ 
+  return min;  
+}
